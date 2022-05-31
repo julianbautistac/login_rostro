@@ -219,15 +219,14 @@ def login():
     verificacion_contra=StringVar()
 
     #Ingresamos los datos
-    Label(pantalla2,text="Usuario * ").pack()
-    usuario_entrada2 = Entry(pantalla2,textvariable=verificacion_usuario)
-    usuario.entrada2.pack()
-    Label(pantalla2,text="contraseña * ").pack()
-    contra_entrada2=Entry(pantalla2,textvariable=verificacion_contra)
+    Label(pantalla2, text = "Usuario * ").pack()
+    usuario_entrada2 = Entry(pantalla2, textvariable = verificacion_usuario)
+    usuario_entrada2.pack()
+    Label(pantalla2, text = "Contraseña * ").pack()
+    contra_entrada2 = Entry(pantalla2, textvariable = verificacion_contra)
     contra_entrada2.pack()
-    Label(pantalla2,text="").pack()
-    Button(pantalla2,text="Inicio de sesion tradicional",width=20,height=1,command=verificacion_login).pack()
-
+    Label(pantalla2, text = "").pack()
+    Button(pantalla2, text = "Inicio de Sesion Tradicional", width = 20, height = 1, command = verificacion_login).pack()
 
     #vamos a crear el boton para hacer el login facial
     Label(pantalla2,text="").pack()
