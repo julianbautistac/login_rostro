@@ -1,11 +1,10 @@
 ##importando librerias
 
-from configparser import Interpolation
-from io import UnsupportedOperation
+
 from tkinter import*
 import os
+import cv2
 from mtcnn import MTCNN
-from mtcnn import cv2
 from matplotlib import pyplot
 
 import numpy as np
@@ -102,6 +101,29 @@ def registro():
     ## boton para hacer el registro facial
     Label(pantalla1,text ="").pack()
     Button(pantalla1, text="Registro facial",width=15,height=1,command=registro_facial).pack()
+
+##funcion para verificar los datos ingresados al login
+def verificacion_login():
+    log_usuario = verificacion_usuario.get()
+    log_contra = verificacion_contra.get()
+
+    usuario_entrada2.delete(0, END)
+    contra_entrada2.delete(0, END)
+
+    lista_archivos = os.listdir()   #Vamos a importar la lista de archivos con la libreria os
+    if log_usuario in lista_archivos:   #Comparamos los archivos con el que nos interesa
+        archivo2 = open(log_usuario, "r")  #Abrimos el archivo en modo lectura
+        verificacion = archivo2.read().splitlines()  #leera las lineas dentro del archivo ignorando el resto
+        if log_contra in verificacion:
+            print("Inicio de sesion exitoso")
+            Label(pantalla2, text = "Inicio de Sesion Exitoso", fg = "green", font = ("Arial",11)).pack()
+        else:
+            print("Contraseña incorrecta, ingrese de nuevo")
+            Label(pantalla2, text = "Contraseña Incorrecta", fg = "red", font = ("Arial",11)).pack()
+    else:
+        print("Usuario no encontrado")
+        Label(pantalla2, text = "Usuario no encontrado", fg = "red", font = ("Arial",11)).pack()
+
 
 ##Funcion para el Login facial
 def login_facial():
