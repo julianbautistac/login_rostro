@@ -255,3 +255,25 @@ def pantalla_principal():
     pantalla.mainloop()
 
 pantalla_principal()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+##codigo de referencia 
+#Aprende e Ingenia https://www.youtube.com/watch?v=Hy3DAxgTSu0&t=198s
