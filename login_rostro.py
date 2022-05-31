@@ -46,6 +46,9 @@ import numpy as np
 
     #detectamos el rostro y exportamos los pixeles.
 
+
+
+
 # funcion para asignar al boton registro
 def registro():
     ##variables globales que usaremos en otras funciones
@@ -64,7 +67,24 @@ def registro():
     contra = StringVar()
 
     Label(pantalla1,text="Registro facil: debe de asignar un usuario:").pack()
+    Label(pantalla1,text="Registro tradicional: debe de asignar un usuario y contraseña:").pack()
+    Label(pantalla1,text="").pack()##solo es un espacio
+    Label(pantalla1,text="Usuario * ").pack() #se muestra la pantalla 1 al usuario
+    usuario_entrada=Entry(pantalla1,textvariable=usuario) ##Creamos un text variable para que el usuario ingrese la informacion
+    usuario_entrada.pack()
+    Label(pantalla1,text="Contraseña * ").pack() #mostramos en la pantalla 1 la contraseña
+    contra_entrada=Entry(pantalla1,textvariable=contra) ##creamos un text variable para que el usuario ingrese la contraseña
+    contra_entrada.pack()
+    Label(pantalla1,text="").pack() #dejamos un espacio para la creacion del boton
+    Button(pantalla1, text="Registro Tradicional", width=15,height=1,command=registrar_usuario).pack() #creamos el boton de registrar usuario
     
+    ## boton para hacer el registro facial
+    Label(pantalla1,text ="").pack()
+    Button(pantalla1, text="Registro facial",width=15,height=1,command=registro_facial).pack()
+
+
+
+
 
     ##empezamos creando la funcion para la pantalla principal
 def pantalla_principal():
