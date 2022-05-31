@@ -1,5 +1,6 @@
 ##importando librerias
 
+from configparser import Interpolation
 from io import UnsupportedOperation
 from tkinter import*
 import os
@@ -27,24 +28,44 @@ import numpy as np
 ##    Label(pantalla1, text="Registro convencional exitoso", fg="green", font=("Calibri",11)).pak()
 
     ##funcion para almacenar el registro facial
-##def registro_facial():
+def registro_facial():
     ##para capturar el rostro
-##    cap = cv2.VideoCapture(0)          #elegimos la camara con la que vamos a hacer la deteccion
-##    while(True):
-##        ret,frame = cap.read()         ##leemos el video
-##        cv2.imshow('Registro facila',frame)     #mostramos el cideo en pantalla
-##        if cv2.waitKey(1) == 27:        ##cuando oprimamos ESC corta el video
-##            break
-##    usuario_img = usuario.get()
-##    cv2.imwrite(usuario_img+".jpg",frame)   ## guardamos la ultima captura del video como imagen y asignamos el nombre del usuario
-##    cap.release()                           ##Cerramos
-##    cv2.destroyAllWindows()
+    cap = cv2.VideoCapture(0)          #elegimos la camara con la que vamos a hacer la deteccion
+    while(True):
+        ret,frame = cap.read()         ##leemos el video
+        cv2.imshow('Registro facila',frame)     #mostramos el video en pantalla
+        if cv2.waitKey(1) == 27:        ##cuando oprimamos ESC corta el video
+            break
+    usuario_img = usuario.get()
+    cv2.imwrite(usuario_img+".jpg",frame)   ## guardamos la ultima captura del video como imagen y asignamos el nombre del usuario
+    cap.release()                           ##Cerramos
+    cv2.destroyAllWindows()
 
-##    usuario_entrada.delete(0, END) #limpiamos los text variables
-##    contra_entrada.delete(0,END)
-##    Label(pantalla1,text = "Registro facial exitoso", fg = "green", font = ("Calibri",11)).pack()
+    usuario_entrada.delete(0, END) #limpiamos los text variables
+    contra_entrada.delete(0,END)
+    Label(pantalla1,text = "Registro facial exitoso", fg = "green", font = ("Calibri",11)).pack()
 
     #detectamos el rostro y exportamos los pixeles.
+
+    def reg_rostro(img,lista_resultados):
+        data=pyplot.imread(img)
+        for i in range(len(lista_resultados)):
+            x1, y1, ancho, alto=lista_resultados[i]['box']
+            x2,y2=x1 + ancho, y1 +alto
+            pyplot.subplot(1,len(lista_resultados),i+1)
+            pyplot.axis('off')
+            cara_reg=data[y1:y2,x1:x2]
+            cara_reg=cv2.resize(cara_reg,(150,200),Interpolation=cv2.INTER_CUBIC)##Guardamos la imagen con un tamaño de 150*200
+            cv2.imwrite(usuario_img+".jpg",cara_reg)
+            pyplot.imshow(data[y1:y2,x1:x2])
+        pyplot.show()
+
+
+    img=usuario_img+".jpg"
+    pixeles=pyplot.imread(img)
+    detector=MTCNN()
+    caras=detector.detect_faces(pixeles)
+    reg_rostro(img,caras)
 
 
 
