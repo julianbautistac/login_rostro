@@ -2,9 +2,54 @@
 
 from tkinter import*
 import os
-##import cv2
+from mtcnn import MTCNN
+from mtcnn import cv2
 from matplotlib import pyplot
-##from mtcnn.mtcnn import MTCNN
+
 import numpy as np
 
 ## se crea una funcion para registrar al usuario
+##def registrar_usuario():
+##    usuario_info = usuario.get() #para obtener la informacion almacenada en usuario
+ ##   contra_info = contra.get() #para obtener la informacion almacenada en contra
+
+ ##   archivo = open(usuario_info, "w")#abrimos la informacion en modo escritura
+ ##   archivo.write(usuario_info + "\n") #escribirmos la informacion
+ ##   archivo.write(contra_info)
+ ##   archivo.close()
+
+    #limpiamos los tex variable
+ ##   usuario_entrada.delete(0,END)
+  ##  contra_entrada.delete(0,END)
+
+    #ahora le diremos al usuario que su registro ha sido exitoso
+##    Label(pantalla1, text="Registro convencional exitoso", fg="green", font=("Calibri",11)).pak()
+
+    ##funcion para almacenar el registro facial
+##def registro_facial():
+    ##para capturar el rostro
+##    cap = cv2.VideoCapture(0)          #elegimos la camara con la que vamos a hacer la deteccion
+##    while(True):
+##        ret,frame = cap.read()         ##leemos el video
+##        cv2.imshow('Registro facila',frame)     #mostramos el cideo en pantalla
+##        if cv2.waitKey(1) == 27:        ##cuando oprimamos ESC corta el video
+##            break
+##    usuario_img = usuario.get()
+##    cv2.imwrite(usuario_img+".jpg",frame)   ## guardamos la ultima captura del video como imagen y asignamos el nombre del usuario
+##    cap.release()                           ##Cerramos
+##    cv2.destroyAllWindows()
+
+##    usuario_entrada.delete(0, END) #limpiamos los text variables
+##    contra_entrada.delete(0,END)
+##    Label(pantalla1,text = "Registro facial exitoso", fg = "green", font = ("Calibri",11)).pack()
+
+    #detectamos el rostro y exportamos los pixeles.
+
+
+    ##empezamos creando la funcion para la pantalla principal
+def pantalla_principal():
+    global pantalla         #es global porque se usaraá en otras funciones
+    pantalla = Tk()
+    pantalla.geometry("300x250")    ##asignamos el tamaño de la ventana
+    pantalla.title("Proyecto de Inteligencia Artificial")   #asignamos el titulo de la pantalla
+    Label(text="Login con el rostro",bg = "gray",width ="300", height="2", font=("Arial",13)).pack()    #caracteristicas de la ventana
