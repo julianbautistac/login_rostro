@@ -4,9 +4,8 @@
 from tkinter import*
 import os
 import cv2
-from mtcnn import MTCNN
+from mtcnn.mtcnn import MTCNN
 from matplotlib import pyplot
-
 import numpy as np
 
 ## se crea una funcion para registrar al usuario
@@ -14,7 +13,7 @@ def registrar_usuario():
     usuario_info = usuario.get() #para obtener la informacion almacenada en usuario
     contra_info = contra.get() #para obtener la informacion almacenada en contra
 
-    archivo = open(usuario_info, "w")#abrimos la informacion en modo escritura
+    archivo = open(usuario_info,"w")#abrimos la informacion en modo escritura
     archivo.write(usuario_info + "\n") #escribirmos la informacion
     archivo.write(contra_info)
     archivo.close()
@@ -32,7 +31,7 @@ def registro_facial():
     cap = cv2.VideoCapture(0)          #elegimos la camara con la que vamos a hacer la deteccion
     while(True):
         ret,frame = cap.read()         ##leemos el video
-        cv2.imshow('Registro facila',frame)     #mostramos el video en pantalla
+        cv2.imshow('Registro facial',frame)     #mostramos el video en pantalla
         if cv2.waitKey(1) == 27:        ##cuando oprimamos ESC corta el video
             break
     usuario_img = usuario.get()
@@ -54,7 +53,7 @@ def registro_facial():
             pyplot.subplot(1,len(lista_resultados),i+1)
             pyplot.axis('off')
             cara_reg=data[y1:y2,x1:x2]
-            cara_reg=cv2.resize(cara_reg,(150,200),Interpolation=cv2.INTER_CUBIC)##Guardamos la imagen con un tamaño de 150*200
+            cara_reg=cv2.resize(cara_reg,(150,200),interpolation=cv2.INTER_CUBIC)##Guardamos la imagen con un tamaño de 150*200
             cv2.imwrite(usuario_img+".jpg",cara_reg)
             pyplot.imshow(data[y1:y2,x1:x2])
         pyplot.show()
@@ -151,7 +150,7 @@ def login_facial():
             pyplot.subplot(1,len(lista_resultados),i+1)
             pyplot.axis('off')
             cara_reg=data[y1:y2,x1:x2]
-            cara_reg=cv2.cv2.resize(cara_reg,(150,200),Interpolation=cv2.INTER_CUBIC) ##Guardamos la imagen 150x200
+            cara_reg=cv2.cv2.resize(cara_reg,(150,200),interpolation=cv2.INTER_CUBIC) ##Guardamos la imagen 150x200
             cv2.imwrite(usuario_login+"LOG.jpg",cara_reg)
             return pyplot.imshow(data[y1:y2,x1:x2])
         pyplot.show()
@@ -159,7 +158,7 @@ def login_facial():
 ##detectamos el rostro
 
     img=usuario_login+"LOG.jpg"
-    pixeles=pyplot.imread()
+    pixeles=pyplot.imread(img)
     detector=MTCNN()
     caras=detector.detect_faces(pixeles)
     log_rostro(img,caras)
@@ -187,7 +186,7 @@ def login_facial():
         rostro_reg=cv2.imread(usuario_login+".jpg",0) #importamos el rostro del registro en escala de grises
         rostro_log=cv2.imread(usuario_login+"LOG.jpg",0) #importamos el rostro del inicio de sesion en escala de grises
         similitud=orb_sim(rostro_reg,rostro_log)
-        if similitud <= 0.9:
+        if similitud >= 0.98:
             Label(pantalla2,text="Inicio de sesion exitoso",fg="green",font=("Arial",11)).pack()
             print("Bienvenido al sistema usuario: ", usuario_login)
             print("compatibilidad con la foto del registro: ", similitud)
@@ -211,7 +210,7 @@ def login():
 
     pantalla2=Toplevel(pantalla)
     pantalla2.title("Login")
-    pantalla2.geometry("300 x 250") ##se crea la ventana
+    pantalla2.geometry("300x250") ##se crea la ventana
     Label(pantalla2,text="Login facial: debe de asignar un usuario:").pack()
     Label(pantalla2,text="Login tradicional: debe de asignar un usuario y contraseña:").pack()
     Label(pantalla2,text="").pack() ##espacio interlineado
