@@ -11,21 +11,21 @@ from matplotlib import pyplot
 import numpy as np
 
 ## se crea una funcion para registrar al usuario
-##def registrar_usuario():
-##    usuario_info = usuario.get() #para obtener la informacion almacenada en usuario
- ##   contra_info = contra.get() #para obtener la informacion almacenada en contra
+def registrar_usuario():
+    usuario_info = usuario.get() #para obtener la informacion almacenada en usuario
+    contra_info = contra.get() #para obtener la informacion almacenada en contra
 
- ##   archivo = open(usuario_info, "w")#abrimos la informacion en modo escritura
- ##   archivo.write(usuario_info + "\n") #escribirmos la informacion
- ##   archivo.write(contra_info)
- ##   archivo.close()
+    archivo = open(usuario_info, "w")#abrimos la informacion en modo escritura
+    archivo.write(usuario_info + "\n") #escribirmos la informacion
+    archivo.write(contra_info)
+    archivo.close()
 
     #limpiamos los tex variable
- ##   usuario_entrada.delete(0,END)
-  ##  contra_entrada.delete(0,END)
+    usuario_entrada.delete(0,END)
+    contra_entrada.delete(0,END)
 
     #ahora le diremos al usuario que su registro ha sido exitoso
-##    Label(pantalla1, text="Registro convencional exitoso", fg="green", font=("Calibri",11)).pak()
+    Label(pantalla1, text="Registro convencional exitoso", fg="green", font=("Arial",11)).pak()
 
     ##funcion para almacenar el registro facial
 def registro_facial():
@@ -102,6 +102,82 @@ def registro():
     ## boton para hacer el registro facial
     Label(pantalla1,text ="").pack()
     Button(pantalla1, text="Registro facial",width=15,height=1,command=registro_facial).pack()
+
+##Funcion para el Login facial
+def login_facial():
+    ## ahora se captura el rostro
+    cap=cv2.VideoCapture(0)     #se elige la camara con la que se detectara el rostro
+    while(True):        
+        ret,frame=cap.read() #se lee el video
+        cv2.imshow('Login facial',frame) ##Mostramos el video en patantalla
+        if cv2.waitKey(1)==27: ##cuando presionamos ESC se corta el video
+            break
+    usuario_login=verificacion_usuario.get() #con esta variable se va a guardar la foto pero con otro nombre para no sobreescribir
+    cv2.imwrite(usuario_login+"LOG.jpg",frame)  ##guardamos la ultima captura del video como imagen y asignamos el nombre del usuario
+    cap.release() #para cerrar
+    cv2.destroyAllWindows()
+
+    usuario_entrada2.delete(0,END) ##limpiamos los text variables
+    contra_entrada2.delete(0,END)
+
+##funcion para guardar el rostro
+    def log_rostro(img, lista_resultados):
+        data=pyplot.imread(img)
+        for i in range(len(lista_resultados)):
+            x1,y1,ancho,alto=lista_resultados[i]['box']
+            x2,y2=x1+ancho,y1+alto
+            pyplot.subplot(1,len(lista_resultados),i+1)
+            pyplot.axis('off')
+            cara_reg=data[y1:y2,x1:x2]
+            cara_reg=cv2.cv2.resize(cara_reg,(150,200),Interpolation=cv2.INTER_CUBIC) ##Guardamos la imagen 150x200
+            cv2.imwrite(usuario_login+"LOG.jpg",cara_reg)
+            return pyplot.imshow(data[y1:y2,x1:x2])
+        pyplot.show()
+
+##detectamos el rostro
+
+    img=usuario_login+"LOG.jpg"
+    pixeles=pyplot.imread()
+    detector=MTCNN()
+    caras=detector.detect_faces(pixeles)
+    log_rostro(img,caras)
+
+##funcion para comparar los rostros
+
+    def orb_sim(img1,img2):
+        orb=cv2.ORB_create()    ##se crea el objeto de comparacion
+
+        kpa, descr_a=orb.detectAndCompute(img1, NONE) ##creamos descriptor 1 y extraemos puntos claves
+        kpb, descr_b=orb.detectAndCompute(img2,NONE)   ##creamos descriptor 2 y extraemos puntos claves
+
+        comp=cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=True) #creamos comparador de fuerza
+
+        matches=comp.match(descr_a,descr_b) ##aplicamos el comparador a los descriptores
+        regiones_similares=[i for i in matches if i.distance<70] ##extraemos las regiones similares en base a los puntos claves
+        if len(matches)==0:
+            return 0
+        return len(regiones_similares)/len(matches) #exportamos el porcentaje de similitud
+
+##importamos las imagenes y llamamos la funcion comparacion
+
+    im_archivos=os.listdir()    ##vamos a importar la lista de archivos con la libreria os
+    if usuario_login+".jpg" in im_archivos:  #comparamos los archivos con el que nos interesa
+        rostro_reg=cv2.imread(usuario_login+".jpg",0) #importamos el rostro del registro en escala de grises
+        rostro_log=cv2.imread(usuario_login+"LOG.jpg",0) #importamos el rostro del inicio de sesion en escala de grises
+        similitud=orb_sim(rostro_reg,rostro_log)
+        if similitud <= 0.9:
+            Label(pantalla2,text="Inicio de sesion exitoso",fg="green",font=("Arial",11)).pack()
+            print("Bienvenido al sistema usuario: ", usuario_login)
+            print("compatibilidad con la foto del registro: ", similitud)
+        else:
+            print("rostro incorrecto, verifique su usuario")
+            print("compatibilidad con la foto del registro: ", similitud)
+            Label(pantalla2,text="incompatibilidad de rostros", fg="red", font=("Arial",11)).pack()
+    else:
+        print("Usuario no encontrado")
+        Label(pantalla2,text="usuario no encontrado", fg="red", font=("Arial",11)).pack()
+
+
 
 ##Funcion que se le asigna al boton del login
 def login():
