@@ -103,7 +103,38 @@ def registro():
     Label(pantalla1,text ="").pack()
     Button(pantalla1, text="Registro facial",width=15,height=1,command=registro_facial).pack()
 
+##Funcion que se le asigna al boton del login
+def login():
+    global pantalla2
+    global verificacion_usuario
+    global verificacion_contra
+    global usuario_entrada2
+    global contra_entrada2
 
+    pantalla2=Toplevel(pantalla)
+    pantalla2.title("Login")
+    pantalla2.geometry("300 x 250") ##se crea la ventana
+    Label(pantalla2,text="Login facial: debe de asignar un usuario:").pack()
+    Label(pantalla2,text="Login tradicional: debe de asignar un usuario y contraseña:").pack()
+    Label(pantalla2,text="").pack() ##espacio interlineado
+
+    verificacion_usuario=StringVar()
+    verificacion_contra=StringVar()
+
+    #Ingresamos los datos
+    Label(pantalla2,text="Usuario * ").pack()
+    usuario_entrada2 = Entry(pantalla2,textvariable=verificacion_usuario)
+    usuario.entrada2.pack()
+    Label(pantalla2,text="contraseña * ").pack()
+    contra_entrada2=Entry(pantalla2,textvariable=verificacion_contra)
+    contra_entrada2.pack()
+    Label(pantalla2,text="").pack()
+    Button(pantalla2,text="Inicio de sesion tradicional",width=20,height=1,command=verificacion_login).pack()
+
+
+    #vamos a crear el boton para hacer el login facial
+    Label(pantalla2,text="").pack()
+    Button(pantalla2,text="Inicio de sesion facial",width=20,height=1,command=login_facial).pack()
 
 
 
