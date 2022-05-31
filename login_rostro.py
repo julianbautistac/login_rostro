@@ -1,5 +1,6 @@
 ##importando librerias
 
+from io import UnsupportedOperation
 from tkinter import*
 import os
 from mtcnn import MTCNN
@@ -45,6 +46,25 @@ import numpy as np
 
     #detectamos el rostro y exportamos los pixeles.
 
+# funcion para asignar al boton registro
+def registro():
+    ##variables globales que usaremos en otras funciones
+    global usuario
+    global contra 
+    global usuario_entrada
+    global contra_entrada
+    global pantalla1
+    pantalla1 = Toplevel(pantalla)  #esta pantalla es de un nivel superior al principal
+    pantalla1.title("Registro")
+    pantalla1.geometry("300x250")   #asignamos el tamaño de la ventana
+
+    ##Se crean las entradas
+
+    usuario = StringVar()
+    contra = StringVar()
+
+    Label(pantalla1,text="Registro facil: debe de asignar un usuario:").pack()
+    
 
     ##empezamos creando la funcion para la pantalla principal
 def pantalla_principal():
