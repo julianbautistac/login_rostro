@@ -53,3 +53,12 @@ def pantalla_principal():
     pantalla.geometry("300x250")    ##asignamos el tamaño de la ventana
     pantalla.title("Proyecto de Inteligencia Artificial")   #asignamos el titulo de la pantalla
     Label(text="Login con el rostro",bg = "gray",width ="300", height="2", font=("Arial",13)).pack()    #caracteristicas de la ventana
+
+# Se crean los botones
+    Label(text="").pack()   #Creamos el espacio entre el titulo y el primer boton
+    Button(text="Iniciar Sesion", height="2",width="30", command=login).pack()
+    Label(text="").pack()   #creamos el espacio entre el primer boton y el segundo boton
+    Button(text="Registro",height="2",width="30",command=registro).pack()
+
+    pantalla.mainloop()
+pantalla_principal()
