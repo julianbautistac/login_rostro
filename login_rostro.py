@@ -75,7 +75,7 @@ def registro():
     global pantalla1
     pantalla1 = Toplevel(pantalla) #Esta pantalla es de un nivel superior a la principal
     pantalla1.title("Registro")
-    pantalla1.geometry("400x350")  #Asignamos el tamaño de la ventana
+    pantalla1.geometry("500x450")  #Asignamos el tamaño de la ventana
     
     #Empezaremos a crear las entradas 
     
@@ -83,7 +83,7 @@ def registro():
     contra = StringVar()
     
     Label(pantalla1, text = "Registro facial: debe de asignar un usuario:").pack()
-    #Label(pantalla1, text = "").pack()  #Dejamos un poco de espacio
+    
     Label(pantalla1, text = "Registro tradicional: debe asignar usuario y contraseña:").pack()
     Label(pantalla1, text = "").pack()  #Dejamos un poco de espacio
     Label(pantalla1, text = "Usuario * ").pack()  #Mostramos en la pantalla 1 el usuario
@@ -93,7 +93,7 @@ def registro():
     contra_entrada = Entry(pantalla1, textvariable = contra) #Creamos un text variable para que el usuario ingrese la contra
     contra_entrada.pack()
     Label(pantalla1, text = "").pack()  #Dejamos un espacio para la creacion del boton
-    Button(pantalla1, text = "Registro Tradicional", width = 15, height = 1, command = registrar_usuario).pack()  #Creamos el boton
+    Button(pantalla1, text = "Registro convencional", width = 15, height = 1, command = registrar_usuario).pack()  #Creamos el boton
 
     # Vamos a crear el boton para hacer el registro facial 
     Label(pantalla1, text = "").pack()
@@ -112,13 +112,14 @@ def verificacion_login():
         archivo2 = open(log_usuario, "r")  #Abrimos el archivo en modo lectura
         verificacion = archivo2.read().splitlines()  #leera las lineas dentro del archivo ignorando el resto
         if log_contra in verificacion:
-           #print("Inicio de sesion exitoso")
+           
             Label(pantalla2, text = "Inicio de Sesion Exitoso", fg = "blue", font = ("Arial",11)).pack()
+            pantalla_bienvenida()
         else:
-            #print("Contraseña incorrecta, ingrese de nuevo")
+            
             Label(pantalla2, text = "Contraseña Incorrecta", fg = "red", font = ("Arial",11)).pack()
     else:
-        #print("Usuario no encontrado")
+        
         Label(pantalla2, text = "Usuario no encontrado", fg = "red", font = ("Arial",11)).pack()
     
 #Funcion para el Login Facial 
@@ -186,11 +187,8 @@ def login_facial():
         if similitud >= 0.98:
             #Label(pantalla2, text = "Inicio de Sesion Exitoso", fg = "blue", font = ("Arial",11)).pack()
             pantalla_bienvenida()
-           # print("Bienvenido al sistema usuario: ",usuario_login)
-            #print("Compatibilidad con la foto del registro: ",similitud)
+           
         else:
-            #print("Rostro incorrecto, Cerifique su usuario")
-            #print("Compatibilidad con la foto del registro: ",similitud)
             Label(pantalla2, text = "Incompatibilidad facial", fg = "red", font = ("Arial",11)).pack()
     else:
         print("Usuario no encontrado")
@@ -208,7 +206,7 @@ def login():
     
     pantalla2 = Toplevel(pantalla)
     pantalla2.title("Login")
-    pantalla2.geometry("400x350")   #Creamos la ventana
+    pantalla2.geometry("500x450")   #Creamos la ventana
     Label(pantalla2, text = "Login facial: debe de asignar un usuario:").pack()
     Label(pantalla2, text = "Login caracteres: debe asignar usuario y contraseña:").pack()
     Label(pantalla2, text = "").pack()  #Dejamos un poco de espacio
@@ -224,7 +222,7 @@ def login():
     contra_entrada2 = Entry(pantalla2, textvariable = verificacion_contra)
     contra_entrada2.pack()
     Label(pantalla2, text = "").pack()
-    Button(pantalla2, text = "Inicio de Sesion con caracteres", width = 20, height = 1, command = verificacion_login).pack()
+    Button(pantalla2, text = "Inicio convencional", width = 20, height = 1, command = verificacion_login).pack()
 
     # Vamos a crear el boton para hacer el login facial 
     Label(pantalla2, text = "").pack()
@@ -233,9 +231,9 @@ def login():
 def pantalla_bienvenida():
     global pantalla3          #Globalizamos la variable para usarla en otras funciones
     pantalla3 = Tk()
-    pantalla3.geometry("400x350")  #Asignamos el tamaño de la ventana 
+    pantalla3.geometry("500x450")  #Asignamos el tamaño de la ventana 
     pantalla3.title("Pagina de inicio")       #Asignamos el titulo de la pantalla
-    Label(pantalla3, text = "Bienvenido a tu página de inicio", bg = "green", width = "400", height = "2", font = ("Arial", 16)).pack()
+    Label(pantalla3, text = "Bienvenido a tu página de inicio", bg = "green", width = "500", height = "2", font = ("Arial", 16)).pack()
 
 
 # Funcion de nuestra pantalla principal 
@@ -243,9 +241,9 @@ def pantalla_bienvenida():
 def pantalla_principal():
     global pantalla          #Globalizamos la variable para usarla en otras funciones
     pantalla = Tk()
-    pantalla.geometry("400x350")  #Asignamos el tamaño de la ventana 
+    pantalla.geometry("500x450")  #Asignamos el tamaño de la ventana 
     pantalla.title("Proyecto final Inteligencia Artificial")       #Asignamos el titulo de la pantalla
-    Label(text = "Login con deteccion de rostro", bg = "gray", width = "400", height = "2", font = ("Arial", 13)).pack() #Asignamos caracteristicas de la ventana
+    Label(text = "Login con deteccion de rostro", bg = "white", width = "500", height = "2", font = ("Arial", 13)).pack() #Asignamos caracteristicas de la ventana
     
 # Vamos a Crear los Botones 
     
